@@ -11,7 +11,7 @@ export default function SciOSDashboard() {
       {/* HEADER SECTION */}
       <header className="flex justify-between items-center mb-12 border-b border-slate-800 pb-6">
         <div>
-          <h1 className="text-3xl font-bold tracking-tighter text-cyan-300 drop-shadow-[0_0_12px_rgba(34,211,238,0.7)] flex items-center gap-2">
+          <h1 className="text-3xl font-bold tracking-tighter text-cyan-400 flex items-center gap-2">
             <Cpu className="w-8 h-8" /> SCIOS LAB-ON-CHIP
           </h1>
           <p className="text-slate-500 text-sm mt-1">Causal Intelligence Overlay for Microfluidics</p>
@@ -32,36 +32,12 @@ export default function SciOSDashboard() {
           </button>
         </div>
       </header>
-{/* STATUS STRIP */}
-<div className="grid grid-cols-3 gap-4 mb-8">
 
-  <div className="bg-slate-900/40 border border-slate-800 rounded-xl p-4">
-    <p className="text-slate-500 text-[10px] uppercase">System Status</p>
-    <h3 className="text-green-400 text-xl font-bold mt-2">
-      {mode === "NORMAL" ? "STABLE" : mode}
-    </h3>
-  </div>
-
-  <div className="bg-slate-900/40 border border-slate-800 rounded-xl p-4">
-    <p className="text-slate-500 text-[10px] uppercase">Causal Confidence</p>
-    <h3 className="text-cyan-300 drop-shadow-[0_0_12px_rgba(34,211,238,0.7)] text-xl font-bold mt-2">
-      {mode === "REVEAL" ? "97.2%" : "--"}
-    </h3>
-  </div>
-
-  <div className="bg-slate-900/40 border border-slate-800 rounded-xl p-4">
-    <p className="text-slate-500 text-[10px] uppercase">Facility</p>
-    <h3 className="text-white text-xl font-bold mt-2">
-      VSIP GRID-07
-    </h3>
-  </div>
-
-</div>
       {/* MAIN GRID */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         
         {/* PANEL 1: SENSOR STREAM (MÔ PHỎNG DỮ LIỆU) */}
-        <div className="bg-slate-900/40 backdrop-blur-xl border border-cyan-900/40 shadow-2xl shadow-cyan-950/20 p-6 rounded-2xl relative overflow-hidden">
+        <div className="bg-slate-900/50 border border-slate-800 p-6 rounded-2xl relative overflow-hidden">
           <h2 className="text-slate-400 text-xs mb-4 flex items-center gap-2 italic">
             <Activity className="w-4 h-4" /> REAL-TIME SENSOR STREAM
           </h2>
@@ -80,7 +56,7 @@ export default function SciOSDashboard() {
             </div>
           </div>
           {mode === "FAULT" && (
-            <div className="absolute inset-0 bg-red-950/20 flex flex-col items-center justify-center animate-ping border border-red-500/50 rounded-2xl">
+            <div className="absolute inset-0 bg-red-950/20 flex flex-col items-center justify-center animate-pulse border border-red-500/50 rounded-2xl">
               <AlertTriangle className="text-red-500 w-12 h-12 mb-2" />
               <span className="text-red-500 font-bold text-xs">CLOGGING DETECTED</span>
             </div>
@@ -88,8 +64,8 @@ export default function SciOSDashboard() {
         </div>
 
         {/* PANEL 2: CAUSAL REVEAL (NHÂN QUẢ) */}
-        <div className="bg-slate-900/40 backdrop-blur-xl border border-cyan-900/40 shadow-2xl shadow-cyan-950/20 p-6 rounded-2xl">
-          <h2 className="text-slate-400 text-xs mb-4 flex items-center gap-2 italic text-cyan-300 drop-shadow-[0_0_12px_rgba(34,211,238,0.7)]">
+        <div className="bg-slate-900/50 border border-slate-800 p-6 rounded-2xl">
+          <h2 className="text-slate-400 text-xs mb-4 flex items-center gap-2 italic text-cyan-400">
             <Search className="w-4 h-4" /> SCIOS CAUSAL REVEAL
           </h2>
           {mode === "REVEAL" ? (
@@ -114,12 +90,12 @@ export default function SciOSDashboard() {
         </div>
 
         {/* PANEL 3: FINANCIAL IMPACT (THIỆT HẠI) */}
-        <div className="bg-slate-900/40 backdrop-blur-xl border border-cyan-900/40 shadow-2xl shadow-cyan-950/20 p-6 rounded-2xl">
+        <div className="bg-slate-900/50 border border-slate-800 p-6 rounded-2xl">
           <h2 className="text-slate-400 text-xs mb-4 flex items-center gap-2 italic">
             $ REAGENT LOSS COUNTER
           </h2>
           <div className="flex flex-col items-center justify-center py-4">
-            <span className={`text-6xl tracking-tighter font-black ${loss > 0 ? "text-red-500 animate-ping" : "text-slate-800"}`}>
+            <span className={`text-5xl font-black ${loss > 0 ? "text-red-500 animate-pulse" : "text-slate-800"}`}>
               ${loss.toLocaleString()}
             </span>
             <span className="text-slate-600 text-[10px] mt-2 uppercase tracking-widest">
