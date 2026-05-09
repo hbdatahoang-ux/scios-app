@@ -2,45 +2,71 @@ import { create } from "zustand";
 
 type Mode = "NORMAL" | "FAULT" | "REVEAL";
 
-interface State {
+interface SciosState {
   mode: Mode;
   loss: number;
   running: boolean;
-  injectFault: () => void;
-  reveal: () => void;
+
+  autoplay: () => Promise<void>;
   reset: () => void;
-  autoplay: () => void;
 }
 
-export const useSciOSStore = create<State>((set, get) => ({
+const delay = (ms: number) =>
+  new Promise((res) => setTimeout(res, ms));
+
+export const useSciOSStore = create<SciosState>((set) => ({
   mode: "NORMAL",
   loss: 0,
   running: false,
 
-  injectFault: () => set({ mode: "FAULT" }),
-  reveal: () => set({ mode: "REVEAL" }),
-  reset: () => set({ mode: "NORMAL", loss: 0, running: false }),
-
   autoplay: async () => {
-    set({ running: true, mode: "NORMAL", loss: 0 });
-    
-    // 1. Trạng thái bình thường (2 giây)
-    await new Promise(r => setTimeout(r, 2000));
+    // RESET SYSTEM
+    set({
+      running: true,
+      mode: "NORMAL",
+      loss: 0,
+    });
 
-    // 2. Kích hoạt lỗi: Tắc nghẽn vi lưu
-    set({ mode: "FAULT" });
-    const interval = setInterval(() => {
-      set(s => ({ loss: s.loss + 85 })); // Mỗi 0.5 giây mất $85 mẫu bệnh phẩm
-    }, 500);
+    // NORMAL STATE
+    await delay(4000);
 
-    await new Promise(r => setTimeout(r, 5000));
+    // FAULT STATE
+    set({
+      mode: "FAULT",
+    });
 
-    // 3. SciOS Reveal: Giải mã nhân quả
-    set({ mode: "REVEAL" });
+    let totalLoss = 0;
 
-    await new Promise(r => setTimeout(r, 5000));
+    const lossInterval = setInterval(() => {
+      totalLoss += 2500;
 
-    clearInterval(interval);
-    set({ running: false });
-  }
+      set({
+        loss: totalLoss,
+      });
+    }, 200);
+
+    // SHOW CHAOS
+    await delay(7000);
+
+    // REVEAL ROOT CAUSE
+    set({
+      mode: "REVEAL",
+    });
+
+    // STOP COUNTER
+    clearInterval(lossInterval);
+
+    // END DEMO
+    set({
+      running: false,
+    });
+  },
+
+  reset: () => {
+    set({
+      mode: "NORMAL",
+      loss: 0,
+      running: false,
+    });
+  },
 }));
