@@ -1,4 +1,4 @@
-export default function ProcurementPage() {
+export default function procurementpage() {
   return (
     <main className="min-h-screen bg-slate-950 text-white p-10">
       
